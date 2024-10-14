@@ -1,0 +1,5 @@
+[mpiexec@Alex] Error: Downstream from host Alex exited abnormally
+[mpiexec@Alex] Trying to close other downstreams
+[mpiexec@Alex] HYD_sock_write (..\windows\src\hydra_sock.c:387): write error (errno = 2)
+[mpiexec@Alex] wmain (mpiexec.c:2021): assert (pg->intel.exitcodes != NULL) failed
+[mpiexec@Alex] HYD_sock_write (..\windows\src\hydra_sock.c:387): write error (errno = 2)

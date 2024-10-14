@@ -1,0 +1,289 @@
+-------------------------------------------------------------------------
+
+  .g8"""bgd       db      `7MMM.     ,MMF'`7MM"""YMM   .M"""bgd  .M"""bgd
+.dP'     `M      ;MM:       MMMb    dPMM    MM    `7  ,MI    "Y ,MI    "Y
+dM'       `     ,V^MML      M YM   ,M MM    MM   d    `MMb.     `MMb.
+MM             ,M  `MM      M  Mb  M' MM    MMmmMM      `YMMNq.   `YMMNq.
+MM.    `7MMF'  A     MA     M  YM.P'  MM    MM   Y  , .     `MM .     `MM
+`Mb.     MM   A'     VML    M  `YM'   MM    MM     ,M Mb     dM Mb     dM
+  `"bmmm!GO .YAN.   .KEES!.JML. `'  .JMML..JMMmmmmMMM P"Ybmmd"  P"Ybmmd"
+
+-------------------------------------------------------------------------
+
+                       GAMESS for Microsoft Windows
+                    http://www.msg.ameslab.gov/gamess
+
+GAMESS References:
+
+"General Atomic and Molecular Electronic Structure System"
+M.W.Schmidt, K.K.Baldridge, J.A.Boatz, S.T.Elbert, M.S.Gordon,
+J.H.Jensen, S.Koseki, N.Matsunaga, K.A.Nguyen, S.Su, T.L.Windus, M.Dupuis,
+J.A.Montgomery J. Comput. Chem., 14, 1347-1363(1993).
+
+"Advances in electronic structure theory: GAMESS a decade later"
+M.S.Gordon, M.W.Schmidt pp. 1167-1189, in
+"Theory and Applications of Computational Chemistry: the first forty years"
+C.E.Dykstra, G.Frenking, K.S.Kim, G.E.Scuseria (editors),
+Elsevier, Amsterdam, 2005.
+=========================================================================
+
+Contents of rungms.gms file:
+
+GAMESSDIR=C:\Users\Public\gamess-64
+AUXDATADIR=C:\Users\Public\gamess-64\auxdata
+RESTARTDIR=C:\Users\Public\gamess-64\restart
+SCRATCHDIR=C:\Users\Public\gamess-64\scratch
+VERSION=2023.R1.intel
+
+=========================================================================
+
+Job Properties
+
+Input Filename               : molecule.inp
+GAMESS Version               : gamess.2023.R1.intel.exe
+Compute Processes Requested  : 1
+Nodes Required               : 1
+
+=========================================================================
+
+------------------------ GAMESS EXECUTION SCRIPT ------------------------
+This job is running on host Alex under operating system
+Microsoft Windows [Version 10.0.22631.3958] at 2024-08-29 - 14:47:59.44
+Available scratch disk at beginning of the job is  8,578,768,896 bytes
+
+EXTBAS=/dev/null
+NUCBAS=/dev/null
+EXTCAB=C:\Users\Public\gamess-64\auxdata\AUXBAS\auxdef21
+POSBAS=/dev/null
+DFTBPAR=C:\Users\Public\gamess-64\auxdata\DFTB
+ERICFMT=C:\Users\Public\gamess-64\auxdata\ericfmt.dat
+MCPPATH=C:\Users\Public\gamess-64\auxdata\MCP
+BASPATH=C:\Users\Public\gamess-64\auxdata\BASES
+QUANPOL=C:\Users\Public\gamess-64\auxdata\QUANPOL
+MAKEFP=C:\Users\Public\gamess-64\restart\molecule.efp
+GAMMA=C:\Users\Public\gamess-64\restart\molecule.gamma
+TRAJECT=C:\Users\Public\gamess-64\restart\molecule.trj
+RESTART=C:\Users\Public\gamess-64\restart\molecule.rst
+QMWAVE=C:\Users\Public\gamess-64\restart\molecule.qmw
+MDDIP=C:\Users\Public\gamess-64\restart\molecule.dip
+OPTHES1=C:\Users\Public\gamess-64\restart\molecule.hs1
+OPTHES2=C:\Users\Public\gamess-64\restart\molecule.hs2
+FCIDUMP=C:\Users\Public\gamess-64\restart\molecule.FCIDUMP
+XYZ=C:\Users\Public\gamess-64\scratch\molecule.xyz
+IRCDATA=C:\Users\Public\gamess-64\scratch\molecule.F04
+INPUT=C:\Users\Public\gamess-64\scratch\molecule.F05
+PUNCH=C:\Users\Public\gamess-64\restart\molecule.dat
+AOINTS=C:\Users\Public\gamess-64\scratch\molecule.F08
+NAMDRST=C:\Users\Public\gamess-64\restart\molecule.namdrst
+MOINTS=C:\Users\Public\gamess-64\scratch\molecule.F09
+DICTNRY=C:\Users\Public\gamess-64\scratch\molecule.F10
+DRTFILE=C:\Users\Public\gamess-64\scratch\molecule.F11
+CIVECTR=C:\Users\Public\gamess-64\scratch\molecule.F12
+CASINTS=C:\Users\Public\gamess-64\scratch\molecule.F13
+CIINTS=C:\Users\Public\gamess-64\scratch\molecule.F14
+WORK15=C:\Users\Public\gamess-64\scratch\molecule.F15
+WORK16=C:\Users\Public\gamess-64\scratch\molecule.F16
+CSFSAVE=C:\Users\Public\gamess-64\scratch\molecule.F17
+FOCKDER=C:\Users\Public\gamess-64\scratch\molecule.F18
+WORK19=C:\Users\Public\gamess-64\scratch\molecule.F19
+DASORT=C:\Users\Public\gamess-64\scratch\molecule.F20
+DIABDAT=C:\Users\Public\gamess-64\scratch\molecule.F21
+DFTINTS=C:\Users\Public\gamess-64\scratch\molecule.F21
+DFTGRID=C:\Users\Public\gamess-64\scratch\molecule.F22
+JKFILE=C:\Users\Public\gamess-64\scratch\molecule.F23
+ORDINT=C:\Users\Public\gamess-64\scratch\molecule.F24
+EFPIND=C:\Users\Public\gamess-64\scratch\molecule.F25
+PCMDATA=C:\Users\Public\gamess-64\scratch\molecule.F26
+PCMINTS=C:\Users\Public\gamess-64\scratch\molecule.F27
+SVPWRK1=C:\Users\Public\gamess-64\scratch\molecule.F26
+SVPWRK2=C:\Users\Public\gamess-64\scratch\molecule.F27
+COSCAV=C:\Users\Public\gamess-64\scratch\molecule.F26
+COSDATA=C:\Users\Public\gamess-64\restart\molecule.cosmo
+COSPOT=C:\Users\Public\gamess-64\restart\molecule.pot
+MLTPL=C:\Users\Public\gamess-64\scratch\molecule.F28
+MLTPLT=C:\Users\Public\gamess-64\scratch\molecule.F29
+DAFL30=C:\Users\Public\gamess-64\scratch\molecule.F30
+SOINTX=C:\Users\Public\gamess-64\scratch\molecule.F31
+SOINTY=C:\Users\Public\gamess-64\scratch\molecule.F32
+SOINTZ=C:\Users\Public\gamess-64\scratch\molecule.F33
+SORESC=C:\Users\Public\gamess-64\scratch\molecule.F34
+QOPWRF=C:\Users\Public\gamess-64\scratch\molecule.wrf
+GCILIST=C:\Users\Public\gamess-64\scratch\molecule.F37
+HESSIAN=C:\Users\Public\gamess-64\scratch\molecule.F38
+QMMMTEI=C:\Users\Public\gamess-64\scratch\molecule.F39
+SOCCDAT=C:\Users\Public\gamess-64\scratch\molecule.F40
+AABB41=C:\Users\Public\gamess-64\scratch\molecule.F41
+BBAA42=C:\Users\Public\gamess-64\scratch\molecule.F42
+BBBB43=C:\Users\Public\gamess-64\scratch\molecule.F43
+REMD=C:\Users\Public\gamess-64\scratch\molecule.F44
+UNV=C:\Users\Public\gamess-64\scratch\molecule.F45
+UNPV=C:\Users\Public\gamess-64\scratch\molecule.F46
+MCQD50=C:\Users\Public\gamess-64\scratch\molecule.F50
+MCQD51=C:\Users\Public\gamess-64\scratch\molecule.F51
+MCQD52=C:\Users\Public\gamess-64\scratch\molecule.F52
+MCQD53=C:\Users\Public\gamess-64\scratch\molecule.F53
+MCQD54=C:\Users\Public\gamess-64\scratch\molecule.F54
+MCQD55=C:\Users\Public\gamess-64\scratch\molecule.F55
+MCQD56=C:\Users\Public\gamess-64\scratch\molecule.F56
+MCQD57=C:\Users\Public\gamess-64\scratch\molecule.F57
+MCQD58=C:\Users\Public\gamess-64\scratch\molecule.F58
+MCQD59=C:\Users\Public\gamess-64\scratch\molecule.F59
+MCQD60=C:\Users\Public\gamess-64\scratch\molecule.F60
+MCQD61=C:\Users\Public\gamess-64\scratch\molecule.F61
+MCQD62=C:\Users\Public\gamess-64\scratch\molecule.F62
+MCQD63=C:\Users\Public\gamess-64\scratch\molecule.F63
+MCQD64=C:\Users\Public\gamess-64\scratch\molecule.F64
+NMRINT1=C:\Users\Public\gamess-64\scratch\molecule.F61
+NMRINT2=C:\Users\Public\gamess-64\scratch\molecule.F62
+NMRINT3=C:\Users\Public\gamess-64\scratch\molecule.F63
+NMRINT4=C:\Users\Public\gamess-64\scratch\molecule.F64
+NMRINT5=C:\Users\Public\gamess-64\scratch\molecule.F65
+NMRINT6=C:\Users\Public\gamess-64\scratch\molecule.F66
+DCPHFH2=C:\Users\Public\gamess-64\scratch\molecule.F67
+DCPHF21=C:\Users\Public\gamess-64\scratch\molecule.F68
+ELNUINT=C:\Users\Public\gamess-64\scratch\molecule.F67
+NUNUINT=C:\Users\Public\gamess-64\scratch\molecule.F68
+GVVPT=C:\Users\Public\gamess-64\scratch\molecule.F69
+NUMOCAS=C:\Users\Public\gamess-64\scratch\molecule.F70
+NUELCAS=C:\Users\Public\gamess-64\scratch\molecule.F72
+EPOVRLP=C:\Users\Public\gamess-64\scratch\molecule.F73
+RIVMAT=C:\Users\Public\gamess-64\scratch\molecule.F51
+RIT2A=C:\Users\Public\gamess-64\scratch\molecule.F52
+RIT3A=C:\Users\Public\gamess-64\scratch\molecule.F53
+RIT2B=C:\Users\Public\gamess-64\scratch\molecule.F54
+RIT3B=C:\Users\Public\gamess-64\scratch\molecule.F55
+KI=C:\Users\Public\gamess-64\scratch\molecule.F47
+BI=C:\Users\Public\gamess-64\scratch\molecule.F48
+PRMERI=C:\Users\Public\gamess-64\scratch\molecule.F49
+TRSERI=C:\Users\Public\gamess-64\scratch\molecule.F50
+PVP=C:\Users\Public\gamess-64\scratch\molecule.F51
+TPVPI=C:\Users\Public\gamess-64\scratch\molecule.F52
+TPVPJ=C:\Users\Public\gamess-64\scratch\molecule.F53
+PPVPP=C:\Users\Public\gamess-64\scratch\molecule.F54
+TPPVPP=C:\Users\Public\gamess-64\scratch\molecule.F55
+TPPVPP=C:\Users\Public\gamess-64\scratch\molecule.F55
+DEN2P1=C:\Users\Public\gamess-64\scratch\molecule.F70
+DEN2P2=C:\Users\Public\gamess-64\scratch\molecule.F71
+DEN2P3=C:\Users\Public\gamess-64\scratch\molecule.F72
+DEN2P4=C:\Users\Public\gamess-64\scratch\molecule.F73
+DEN2NM=C:\Users\Public\gamess-64\scratch\molecule.F74
+DEN2OPT=C:\Users\Public\gamess-64\scratch\molecule.F75
+GMCREF=C:\Users\Public\gamess-64\scratch\molecule.F70
+GMCO2R=C:\Users\Public\gamess-64\scratch\molecule.F71
+GMCROC=C:\Users\Public\gamess-64\scratch\molecule.F72
+GMCOOC=C:\Users\Public\gamess-64\scratch\molecule.F73
+GMCCC0=C:\Users\Public\gamess-64\scratch\molecule.F74
+GMCHMA=C:\Users\Public\gamess-64\scratch\molecule.F75
+GMCEI1=C:\Users\Public\gamess-64\scratch\molecule.F76
+GMCEI2=C:\Users\Public\gamess-64\scratch\molecule.F77
+GMCEOB=C:\Users\Public\gamess-64\scratch\molecule.F78
+GMCEDT=C:\Users\Public\gamess-64\scratch\molecule.F79
+GMCERF=C:\Users\Public\gamess-64\scratch\molecule.F80
+GMCHCR=C:\Users\Public\gamess-64\scratch\molecule.F81
+GMCGJK=C:\Users\Public\gamess-64\scratch\molecule.F82
+GMCGAI=C:\Users\Public\gamess-64\scratch\molecule.F83
+GMCGEO=C:\Users\Public\gamess-64\scratch\molecule.F84
+GMCTE1=C:\Users\Public\gamess-64\scratch\molecule.F85
+GMCTE2=C:\Users\Public\gamess-64\scratch\molecule.F86
+GMCHEF=C:\Users\Public\gamess-64\scratch\molecule.F87
+GMCMOL=C:\Users\Public\gamess-64\scratch\molecule.F88
+GMCMOS=C:\Users\Public\gamess-64\scratch\molecule.F89
+GMCWGT=C:\Users\Public\gamess-64\scratch\molecule.F90
+GMCRM2=C:\Users\Public\gamess-64\scratch\molecule.F91
+GMCRM1=C:\Users\Public\gamess-64\scratch\molecule.F92
+GMCR00=C:\Users\Public\gamess-64\scratch\molecule.F93
+GMCRP1=C:\Users\Public\gamess-64\scratch\molecule.F94
+GMCRP2=C:\Users\Public\gamess-64\scratch\molecule.F95
+GMCVEF=C:\Users\Public\gamess-64\scratch\molecule.F96
+GMCDIN=C:\Users\Public\gamess-64\scratch\molecule.F97
+GMC2SZ=C:\Users\Public\gamess-64\scratch\molecule.F98
+GMCCCS=C:\Users\Public\gamess-64\scratch\molecule.F99
+CCREST=C:\Users\Public\gamess-64\scratch\molecule.F70
+CCDIIS=C:\Users\Public\gamess-64\scratch\molecule.F71
+CCINTS=C:\Users\Public\gamess-64\scratch\molecule.F72
+CCT1AMP=C:\Users\Public\gamess-64\scratch\molecule.F73
+CCT2AMP=C:\Users\Public\gamess-64\scratch\molecule.F74
+CCT3AMP=C:\Users\Public\gamess-64\scratch\molecule.F75
+CCVM=C:\Users\Public\gamess-64\scratch\molecule.F76
+CCVE=C:\Users\Public\gamess-64\scratch\molecule.F77
+CCQUADS=C:\Users\Public\gamess-64\scratch\molecule.F78
+QUADSVO=C:\Users\Public\gamess-64\scratch\molecule.F79
+EOMSTAR=C:\Users\Public\gamess-64\scratch\molecule.F80
+EOMVEC1=C:\Users\Public\gamess-64\scratch\molecule.F81
+EOMVEC2=C:\Users\Public\gamess-64\scratch\molecule.F82
+EOMHC1=C:\Users\Public\gamess-64\scratch\molecule.F83
+EOMHC2=C:\Users\Public\gamess-64\scratch\molecule.F84
+EOMHHHH=C:\Users\Public\gamess-64\scratch\molecule.F85
+EOMPPPP=C:\Users\Public\gamess-64\scratch\molecule.F86
+EOMRAMP=C:\Users\Public\gamess-64\scratch\molecule.F87
+EOMRTMP=C:\Users\Public\gamess-64\scratch\molecule.F88
+EOMDG12=C:\Users\Public\gamess-64\scratch\molecule.F89
+MMPP=C:\Users\Public\gamess-64\scratch\molecule.F90
+MMHPP=C:\Users\Public\gamess-64\scratch\molecule.F91
+MMCIVEC=C:\Users\Public\gamess-64\scratch\molecule.F92
+MMCIVC1=C:\Users\Public\gamess-64\scratch\molecule.F93
+MMCIITR=C:\Users\Public\gamess-64\scratch\molecule.F94
+EOMVL1=C:\Users\Public\gamess-64\scratch\molecule.F95
+EOMVL2=C:\Users\Public\gamess-64\scratch\molecule.F96
+EOMLVEC=C:\Users\Public\gamess-64\scratch\molecule.F97
+EOMHL1=C:\Users\Public\gamess-64\scratch\molecule.F98
+EOMHL2=C:\Users\Public\gamess-64\scratch\molecule.F99
+CCVVVV=C:\Users\Public\gamess-64\scratch\molecule.F80
+AMPROCC=C:\Users\Public\gamess-64\scratch\molecule.F70
+ITOPNCC=C:\Users\Public\gamess-64\scratch\molecule.F71
+FOCKMTX=C:\Users\Public\gamess-64\scratch\molecule.F72
+LAMB23=C:\Users\Public\gamess-64\scratch\molecule.F73
+VHHAA=C:\Users\Public\gamess-64\scratch\molecule.F74
+VHHBB=C:\Users\Public\gamess-64\scratch\molecule.F75
+VHHAB=C:\Users\Public\gamess-64\scratch\molecule.F76
+VMAA=C:\Users\Public\gamess-64\scratch\molecule.F77
+VMBB=C:\Users\Public\gamess-64\scratch\molecule.F78
+VMAB=C:\Users\Public\gamess-64\scratch\molecule.F79
+VMBA=C:\Users\Public\gamess-64\scratch\molecule.F80
+VHPRAA=C:\Users\Public\gamess-64\scratch\molecule.F81
+VHPRBB=C:\Users\Public\gamess-64\scratch\molecule.F82
+VHPRAB=C:\Users\Public\gamess-64\scratch\molecule.F83
+VHPLAA=C:\Users\Public\gamess-64\scratch\molecule.F84
+VHPLBB=C:\Users\Public\gamess-64\scratch\molecule.F85
+VHPLAB=C:\Users\Public\gamess-64\scratch\molecule.F86
+VHPLBA=C:\Users\Public\gamess-64\scratch\molecule.F87
+VEAA=C:\Users\Public\gamess-64\scratch\molecule.F88
+VEBB=C:\Users\Public\gamess-64\scratch\molecule.F89
+VEAB=C:\Users\Public\gamess-64\scratch\molecule.F90
+VEBA=C:\Users\Public\gamess-64\scratch\molecule.F91
+VPPPP=C:\Users\Public\gamess-64\scratch\molecule.F92
+INTERM1=C:\Users\Public\gamess-64\scratch\molecule.F93
+INTERM2=C:\Users\Public\gamess-64\scratch\molecule.F94
+INTERM3=C:\Users\Public\gamess-64\scratch\molecule.F95
+ITSPACE=C:\Users\Public\gamess-64\scratch\molecule.F96
+INSTART=C:\Users\Public\gamess-64\scratch\molecule.F97
+ITSPC3=C:\Users\Public\gamess-64\scratch\molecule.F98
+AOINTS=C:\Users\Public\gamess-64\scratch\molecule.F08
+OLI201=C:\Users\Public\gamess-64\scratch\molecule.F201
+OLI202=C:\Users\Public\gamess-64\scratch\molecule.F202
+OLI203=C:\Users\Public\gamess-64\scratch\molecule.F203
+OLI204=C:\Users\Public\gamess-64\scratch\molecule.F204
+OLI205=C:\Users\Public\gamess-64\scratch\molecule.F205
+OLI206=C:\Users\Public\gamess-64\scratch\molecule.F206
+OLI207=C:\Users\Public\gamess-64\scratch\molecule.F207
+OLI208=C:\Users\Public\gamess-64\scratch\molecule.F208
+OLI209=C:\Users\Public\gamess-64\scratch\molecule.F209
+OLI210=C:\Users\Public\gamess-64\scratch\molecule.F210
+OLI211=C:\Users\Public\gamess-64\scratch\molecule.F211
+OLI212=C:\Users\Public\gamess-64\scratch\molecule.F212
+OLI213=C:\Users\Public\gamess-64\scratch\molecule.F213
+OLI214=C:\Users\Public\gamess-64\scratch\molecule.F214
+OLI215=C:\Users\Public\gamess-64\scratch\molecule.F215
+OLI216=C:\Users\Public\gamess-64\scratch\molecule.F216
+OLI217=C:\Users\Public\gamess-64\scratch\molecule.F217
+OLI218=C:\Users\Public\gamess-64\scratch\molecule.F218
+OLI219=C:\Users\Public\gamess-64\scratch\molecule.F219
+OLI220=C:\Users\Public\gamess-64\scratch\molecule.F220
+OLI221=C:\Users\Public\gamess-64\scratch\molecule.F221
+OLI222=C:\Users\Public\gamess-64\scratch\molecule.F222
+OLI223=C:\Users\Public\gamess-64\scratch\molecule.F223
+OLI224=C:\Users\Public\gamess-64\scratch\molecule.F224
+OLI225=C:\Users\Public\gamess-64\scratch\molecule.F225
+OLI226=C:\Users\Public\gamess-64\scratch\molecule.F226
+OLI227=C:\Users\Public\gamess-64\scratch\molecule.F227
+Terminate batch job (Y/N)? ÿ

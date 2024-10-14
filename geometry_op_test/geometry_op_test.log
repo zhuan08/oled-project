@@ -1,0 +1,39 @@
+-------------------------------------------------------------------------
+"Oh no you didn't!"
+ERROR :: rungms.gms file not found. Please make one.
+=========================================================================
+
+Create a new txt file called rungms.gms in this directory.
+This file will contain information about your GAMESS setup.
+
+The format of this file is:
+VARIABLE=VALUE
+
+The file must contain:
+GAMESSDIR=C:\Path\to\this\directory
+AUXDATADIR=C:\Path\to\your\local\auxdata\directory
+RESTARTDIR=C:\Path\to\your\local\restart\directory
+SCRATCHDIR=C:\Path\to\your\local\scratch\directory
+
+GAMESSDIR is the path to the GAMESS directory.  You should know it
+since you just executed the 'rungms.bat' file that is contained in
+this directory.
+
+RESTARTDIR is the path to the directory where you wish to save
+the GAMESS restart files (.dat, .rst, .trj, .efp, .gamma, .ldos)
+
+SCRATCHDIR is the path to the directory GAMESS will use
+to store scratch files (which gets deleted at the end of a run).
+
+Additional parameters:
+        DEBUG=[TRUE,FALSE] Option for extra printing from this script.
+       HEADER=[TRUE,FALSE] Option to 'show'/'not show' the GAMESS banner.
+      SUPRESS=[TRUE,FALSE] Option to 'not show'/'show' the job's
+                           environmental variable list.
+ERASEOLDFILES=[TRUE,FALSE] Option to allow the script to remove old restart
+                           files if they are found.
+CLEANALLLOCAL=[TRUE,FALSE] Option to remove the job's environmental variable
+                           and MPI config file.
+=========================================================================
+
+Now exiting.
