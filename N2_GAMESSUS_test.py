@@ -3,7 +3,6 @@ from ase import Atoms
 from ase.optimize import BFGS
 from ase.calculators.gamess_us import GAMESSUS
 from ase.io import read, write
-from rdkit.Chem.Draw import IPythonConsole
 
 IPythonConsole.ipython_3d = True
 
