@@ -1,10 +1,11 @@
 from ase import Atoms
 from ase.optimize import BFGS
-from ase.calculators.gamess_us import GAMESSUS
+from tblite.ase import TBLite
 from rdkit import Chem
 from rdkit.Chem.Draw import IPythonConsole
 from rdkit.Chem import rdDistGeom
 IPythonConsole.ipython_3d = True
+import numpy as np
 
 # -------- Working with Conformers --------
 # nitrogen = Chem.MolFromSmiles('N#N')
@@ -87,16 +88,14 @@ for element in elements:
     for position in positions:
         molecule = Atoms(symbols=f'{element}', positions=position)
         for mult_g in [1, 3]:
-            molecule.calc = GAMESSUS(contrl={'mult': mult_g}, label='molecule',
-                                     command='rungms PREFIX.inp 2023.R1.intel > PREFIX.log 2> PREFIX.err')
+            molecule.calc = TBLite(multiplicity=mult_g)
             opt = BFGS(molecule, logfile='opt.log')
             opt.run(fmax=0.05)
             molecule_pos = molecule.get_positions()
             diff_energy = 0
             print("Positions/Geometry (mult =", f'{mult_g}) \n', molecule_pos)
             for mult_e in [1, 3]:
-                molecule.calc = GAMESSUS(contrl={'mult': mult_e}, label='molecule',
-                                         command='rungms PREFIX.inp 2023.R1.intel > PREFIX.log 2> PREFIX.err')
+                molecule.calc = TBLite(multiplicity=mult_e)
                 if mult_g == 1 and mult_e == 1:
                     energy = molecule.get_potential_energy()
                     print(f'{element}', ' molecule singlet energy (mult =', f'{mult_e})', ': %5.2f eV' % energy)
