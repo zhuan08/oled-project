@@ -4,11 +4,12 @@ from tblite.ase import TBLite
 from rdkit import Chem
 from rdkit.Chem.Draw import IPythonConsole
 from rdkit.Chem import rdDistGeom
+from rdkit.Chem import Draw
 import pandas as pd
 IPythonConsole.ipython_3d = True
 
 # -------- Read csv files for smiles strings --------
-data = pd.read_csv('smiles_energy.csv', sep=',')
+data = pd.read_csv('oled_smiles_energy.csv', sep=',')
 data = data[["mol_id", "smiles", "absorption_energy", "emission_energy"]]
 
 # -------- list of smiles strings --------
@@ -17,12 +18,17 @@ for i in data["smiles"]:
     smiles.append(i)
 # -------- smiles to rdkit molecule --------
 csv_list = []
+smile_id_list = []
 for smile in smiles:
     molecule = Chem.MolFromSmiles(smile)
     molecule = Chem.AddHs(molecule)
+    # Draw.MolToImage(molecule).show()
     # -------- rdkit molecule positions --------
     rdDistGeom.EmbedMolecule(molecule)
-    conf_mol = molecule.GetConformer()
+    try:
+        conf_mol = molecule.GetConformer()
+    except:
+        continue
     pos_mol = conf_mol.GetPositions()
     # -------- rdkit.atom obj to get symbols --------
     atom_mol = molecule.GetAtoms()
@@ -34,7 +40,10 @@ for smile in smiles:
     atom = Atoms(atom_sym, positions=pos_mol)  # atom object to calculate triplet - singlet gap (in triplet geometry)
     atom.calc = TBLite(multiplicity=3)
     opt = BFGS(atom, logfile=f'opt.log_{smile}')
-    opt.run(fmax=0.05)
+    try:
+        opt.run(fmax=0.05)
+    except:
+        continue
     # atom = ase.io.read(filename='geometry.xyz')
     diff_energy = 0
     for mult_e in [1, 3]:
@@ -48,9 +57,11 @@ for smile in smiles:
             diff_energy += energy
             print(f'{smile}', ' molecule triplet energy (triplet geometry)', ': %5.2f eV' % energy)
     csv_list.append(diff_energy)
-    print("Energy difference: ", diff_energy, "\n")
+    smile_id_list.append(smile)
+    # print("Energy difference: ", diff_energy, "\n")
 print(csv_list)
 
 for element in csv_list:
     print(float(element))
-
+for id in smile_id_list:
+    print(id)
