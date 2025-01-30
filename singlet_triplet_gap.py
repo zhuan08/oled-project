@@ -16,9 +16,12 @@ data = data[["mol_id", "smiles", "absorption_energy", "emission_energy"]]
 smiles = []
 for i in data["smiles"]:
     smiles.append(i)
+mol_id = []
+for i in data["mol_id"]:
+    mol_id.append(i)
 # -------- smiles to rdkit molecule --------
 csv_list = []
-smile_id_list = []
+i = 0
 for smile in smiles:
     molecule = Chem.MolFromSmiles(smile)
     molecule = Chem.AddHs(molecule)
@@ -28,6 +31,7 @@ for smile in smiles:
     try:
         conf_mol = molecule.GetConformer()
     except:
+        csv_list.append(float('nan'))
         continue
     pos_mol = conf_mol.GetPositions()
     # -------- rdkit.atom obj to get symbols --------
@@ -43,6 +47,7 @@ for smile in smiles:
     try:
         opt.run(fmax=0.05)
     except:
+        csv_list.append(float('nan'))
         continue
     # atom = ase.io.read(filename='geometry.xyz')
     diff_energy = 0
@@ -57,11 +62,7 @@ for smile in smiles:
             diff_energy += energy
             print(f'{smile}', ' molecule triplet energy (triplet geometry)', ': %5.2f eV' % energy)
     csv_list.append(diff_energy)
-    smile_id_list.append(smile)
     # print("Energy difference: ", diff_energy, "\n")
-print(csv_list)
-
-for element in csv_list:
-    print(float(element))
-for id in smile_id_list:
-    print(id)
+print("csv_list, mol_id")
+for i in range(len(csv_list)):
+    print(csv_list[i], ',', mol_id[i])
