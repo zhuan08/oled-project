@@ -1,3 +1,5 @@
+import os
+import ase.io
 from ase import Atoms
 from ase.optimize import BFGS
 from tblite.ase import TBLite
@@ -7,6 +9,13 @@ from rdkit.Chem import rdDistGeom
 from rdkit.Chem import Draw
 import pandas as pd
 IPythonConsole.ipython_3d = True
+
+# Create an output folder for the geometries, if it doesn't already exist
+geom_dir_name = 'geometries'
+try:
+    os.mkdir(geom_dir_name)
+except FileExistsError:
+    pass
 
 # -------- Read csv files for smiles strings --------
 data = pd.read_csv('oled_smiles_energy.csv', sep=',')
@@ -22,7 +31,7 @@ for i in data["mol_id"]:
 # -------- smiles to rdkit molecule --------
 csv_list = []
 i = 0
-for smile in smiles:
+for mol_id, smile in zip(mol_id, smiles):
     molecule = Chem.MolFromSmiles(smile)
     molecule = Chem.AddHs(molecule)
     # Draw.MolToImage(molecule).show()
@@ -41,15 +50,23 @@ for smile in smiles:
     for char in atom_mol:
         atom_sym.append(char.GetSymbol())
     print(atom_sym)
-    atom = Atoms(atom_sym, positions=pos_mol)  # atom object to calculate triplet - singlet gap (in triplet geometry)
-    atom.calc = TBLite(multiplicity=3)
-    opt = BFGS(atom, logfile=f'opt.log_{smile}')
-    try:
-        opt.run(fmax=0.05)
-    except:
-        csv_list.append(float('nan'))
-        continue
-    # atom = ase.io.read(filename='geometry.xyz')
+    # Geometry optimization
+    # Path name, based on the molecule identifier
+    geom_path = os.path.join(geom_dir_name, f'{mol_id}.xyz')
+    # First, check if there's already a geometry saved, and if so, just load it
+    if os.path.exists(geom_path):
+        atom = ase.io.read(filename=geom_path)
+    else:
+        atom = Atoms(atom_sym, positions=pos_mol)  # atom object to calculate triplet - singlet gap (in triplet geometry)
+        atom.calc = TBLite(multiplicity=3)
+        opt = BFGS(atom, logfile=f'opt.log_{smile}')
+        try:
+            opt.run(fmax=0.05)
+        except:
+            csv_list.append(float('nan'))
+            continue
+        # Write the geometry to a file
+        ase.io.write(filename=geom_path, images=atom)
     diff_energy = 0
     for mult_e in [1, 3]:
         atom.calc = TBLite(multiplicity=mult_e)
