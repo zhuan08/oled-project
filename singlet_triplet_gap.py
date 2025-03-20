@@ -59,7 +59,7 @@ for mol_id, smile in zip(mol_id, smiles):
     else:
         atom = Atoms(atom_sym, positions=pos_mol)  # atom object to calculate triplet - singlet gap (in triplet geometry)
         atom.calc = TBLite(multiplicity=3)
-        opt = BFGS(atom, logfile=f'opt.log_{smile}')
+        opt = BFGS(atom, logfile=None, trajectory=None)
         try:
             opt.run(fmax=0.05)
         except:
@@ -81,5 +81,5 @@ for mol_id, smile in zip(mol_id, smiles):
     csv_list.append(diff_energy)
     # print("Energy difference: ", diff_energy, "\n")
 print("csv_list, mol_id")
-for i in range(len(csv_list)):
-    print(csv_list[i], ',', mol_id[i])
+for mol_id, energy in zip(mol_id, csv_list):
+    print(csv_list[energy], ',', mol_id[mol_id])
