@@ -1,5 +1,6 @@
 import os
 import ase.io
+from octahedral_embed import octahedral_embed
 from ase import Atoms
 from ase.optimize import BFGS
 from tblite.ase import TBLite
@@ -32,37 +33,47 @@ for i in data["mol_id"]:
 csv_list = []
 i = 0
 for mol_id, smile in zip(mol_id, smiles):
-    molecule = Chem.MolFromSmiles(smile)
-    molecule = Chem.AddHs(molecule)
     # Draw.MolToImage(molecule).show()
-    # -------- rdkit molecule positions --------
-    rdDistGeom.EmbedMolecule(molecule)
-    try:
-        conf_mol = molecule.GetConformer()
-    except:
-        csv_list.append(float('nan'))
-        continue
-    pos_mol = conf_mol.GetPositions()
-    # -------- rdkit.atom obj to get symbols --------
-    atom_mol = molecule.GetAtoms()
-    atom_sym = []
-    print(smile)
-    for char in atom_mol:
-        atom_sym.append(char.GetSymbol())
-    print(atom_sym)
     # Geometry optimization
     # Path name, based on the molecule identifier
     geom_path = os.path.join(geom_dir_name, f'{mol_id}.xyz')
     # First, check if there's already a geometry saved, and if so, just load it
     if os.path.exists(geom_path):
         atom = ase.io.read(filename=geom_path)
+        print(f'Found geometry for: {mol_id}')
     else:
+        print(f'Did not find geometry file: {mol_id}')
+        # Geometry optimization
+        molecule = Chem.MolFromSmiles(smile)
+        molecule = Chem.AddHs(molecule)
+            # -------- rdkit molecule positions --------
+        try:
+            octahedral_embed(molecule, isomer="tridentate")
+        except:
+            print(f'Did not use octahedral_embed on: {mol_id}')
+            csv_list.append(float('nan'))
+            continue
+        try:
+            conf_mol = molecule.GetConformer()
+        except:
+            print(f'Did not conform molecule on: {mol_id}')
+            csv_list.append(float('nan'))
+            continue
+        pos_mol = conf_mol.GetPositions()
+        # -------- rdkit.atom obj to get symbols --------
+        atom_mol = molecule.GetAtoms()
+        atom_sym = []
+        print(smile)
+        for char in atom_mol:
+            atom_sym.append(char.GetSymbol())
+        print(atom_sym)
         atom = Atoms(atom_sym, positions=pos_mol)  # atom object to calculate triplet - singlet gap (in triplet geometry)
         atom.calc = TBLite(multiplicity=3)
         opt = BFGS(atom, logfile=None, trajectory=None)
         try:
             opt.run(fmax=0.05)
         except:
+            print(f'Did not optimize run on {mol_id}')
             csv_list.append(float('nan'))
             continue
         # Write the geometry to a file
