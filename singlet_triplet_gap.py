@@ -30,9 +30,11 @@ mol_id = []
 for i in data["mol_id"]:
     mol_id.append(i)
 # -------- smiles to rdkit molecule --------
-csv_list = []
+diff_energy_list = []
 final_mol_id = []
+error_msg = []
 i = 0
+exception_to_append = None
 for mol_id, smile in zip(mol_id, smiles):
     # Draw.MolToImage(molecule).show()
     # Geometry optimization
@@ -52,14 +54,18 @@ for mol_id, smile in zip(mol_id, smiles):
         try:
             octahedral_embed(molecule, isomer="tridentate")
             print(f'Used octahedral_embed on: {mol_id}')
-        except:
+        except Exception as e: 
             print(f'Did not use octahedral_embed on: {mol_id}')
+            exception_to_append = e
+            error_msg.append(exception_to_append)
             continue
         try:
             conf_mol = molecule.GetConformer()
             print(f'Conformed molecule on: {mol_id}')
-        except:
+        except Exception as e:
             print(f'Did not conform molecule on: {mol_id}')
+            exception_to_append = e
+            error_msg.append(exception_to_append)
             continue
         pos_mol = conf_mol.GetPositions()
         # -------- rdkit.atom obj to get symbols --------
@@ -74,8 +80,10 @@ for mol_id, smile in zip(mol_id, smiles):
         try:
             opt.run(fmax=0.05)
             print(f'Optimized run on: {mol_id}')
-        except:
+        except Exception as e:
             print(f'Did not optimize run on: {mol_id}')
+            exception_to_append = e
+            error_msg.append(exception_to_append)
             continue
         # Write the geometry to a file
         ase.io.write(filename=geom_path, images=atom)
@@ -90,7 +98,9 @@ for mol_id, smile in zip(mol_id, smiles):
             energy = atom.get_potential_energy()
             diff_energy += energy
             print(f'{mol_id}', ' molecule triplet energy (triplet geometry)', ': %5.2f eV' % energy)
-    csv_list.append(diff_energy)
+    diff_energy_list.append(diff_energy)
+    error_msg.append(f'No error')
 
-for i in range(len(csv_list)):
-    print(final_mol_id[i], csv_list[i])
+
+for i in range(len(diff_energy_list)):
+    print(final_mol_id[i], diff_energy_list[i], error_msg[i])
