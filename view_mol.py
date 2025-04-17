@@ -11,5 +11,7 @@ from ase.visualize import view
 import pandas as pd
 IPythonConsole.ipython_3d = True
 
-atom = ase.io.read(filename='geometries/NENBIV.xyz')
+atom = ase.io.read(filename='geometries/CUYRAS.xyz')
+view(atom)
+atom = ase.io.read(filename='geometries/UVEFAE.xyz')
 view(atom)

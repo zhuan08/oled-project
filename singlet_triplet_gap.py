@@ -31,6 +31,7 @@ for i in data["mol_id"]:
     mol_id.append(i)
 # -------- smiles to rdkit molecule --------
 csv_list = []
+final_mol_id = []
 i = 0
 for mol_id, smile in zip(mol_id, smiles):
     # Draw.MolToImage(molecule).show()
@@ -40,30 +41,30 @@ for mol_id, smile in zip(mol_id, smiles):
     # First, check if there's already a geometry saved, and if so, just load it
     if os.path.exists(geom_path):
         atom = ase.io.read(filename=geom_path)
-        print(f'Found geometry for: {mol_id}')
+        print(f'Found geometry for file: {mol_id}')
+        final_mol_id.append(mol_id)
     else:
-        print(f'Did not find geometry file: {mol_id}')
+        print(f'Did not find geometry for file: {mol_id}')
         # Geometry optimization
         molecule = Chem.MolFromSmiles(smile)
         molecule = Chem.AddHs(molecule)
             # -------- rdkit molecule positions --------
         try:
             octahedral_embed(molecule, isomer="tridentate")
+            print(f'Used octahedral_embed on: {mol_id}')
         except:
             print(f'Did not use octahedral_embed on: {mol_id}')
-            csv_list.append(float('nan'))
             continue
         try:
             conf_mol = molecule.GetConformer()
+            print(f'Conformed molecule on: {mol_id}')
         except:
             print(f'Did not conform molecule on: {mol_id}')
-            csv_list.append(float('nan'))
             continue
         pos_mol = conf_mol.GetPositions()
         # -------- rdkit.atom obj to get symbols --------
         atom_mol = molecule.GetAtoms()
         atom_sym = []
-        print(smile)
         for char in atom_mol:
             atom_sym.append(char.GetSymbol())
         print(atom_sym)
@@ -72,9 +73,9 @@ for mol_id, smile in zip(mol_id, smiles):
         opt = BFGS(atom, logfile=None, trajectory=None)
         try:
             opt.run(fmax=0.05)
+            print(f'Optimized run on: {mol_id}')
         except:
-            print(f'Did not optimize run on {mol_id}')
-            csv_list.append(float('nan'))
+            print(f'Did not optimize run on: {mol_id}')
             continue
         # Write the geometry to a file
         ase.io.write(filename=geom_path, images=atom)
@@ -84,13 +85,12 @@ for mol_id, smile in zip(mol_id, smiles):
         if mult_e == 1:
             energy = atom.get_potential_energy()
             diff_energy -= energy
-            print(f'{smile}', ' molecule singlet energy (triplet geometry)', ': %5.2f eV' % energy)
+            print(f'{mol_id}', ' molecule singlet energy (triplet geometry)', ': %5.2f eV' % energy)
         if mult_e == 3:
             energy = atom.get_potential_energy()
             diff_energy += energy
-            print(f'{smile}', ' molecule triplet energy (triplet geometry)', ': %5.2f eV' % energy)
+            print(f'{mol_id}', ' molecule triplet energy (triplet geometry)', ': %5.2f eV' % energy)
     csv_list.append(diff_energy)
-    # print("Energy difference: ", diff_energy, "\n")
-print("csv_list, mol_id")
-for mol_id, energy in zip(mol_id, csv_list):
-    print(csv_list[energy], ',', mol_id[mol_id])
+
+for i in range(len(csv_list)):
+    print(final_mol_id[i], csv_list[i])
