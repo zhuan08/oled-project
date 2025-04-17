@@ -34,7 +34,6 @@ diff_energy_list = []
 final_mol_id = []
 error_msg = []
 i = 0
-append_exception = False
 for mol_id, smile in zip(mol_id, smiles):
     # Draw.MolToImage(molecule).show()
     # Geometry optimization
@@ -56,7 +55,6 @@ for mol_id, smile in zip(mol_id, smiles):
             print(f'Used octahedral_embed on: {mol_id}')
         except Exception as e: 
             print(f'Did not use octahedral_embed on: {mol_id}')
-            append_exception = True
             error_msg.append(e)
             continue
         try:
@@ -64,7 +62,6 @@ for mol_id, smile in zip(mol_id, smiles):
             print(f'Conformed molecule on: {mol_id}')
         except Exception as e:
             print(f'Did not conform molecule on: {mol_id}')
-            append_exception = True
             error_msg.append(e)
             continue
         pos_mol = conf_mol.GetPositions()
@@ -82,7 +79,6 @@ for mol_id, smile in zip(mol_id, smiles):
             print(f'Optimized run on: {mol_id}')
         except Exception as e:
             print(f'Did not optimize run on: {mol_id}')
-            append_exception = True
             error_msg.append(e)
             continue
         # Write the geometry to a file
