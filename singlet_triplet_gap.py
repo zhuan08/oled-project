@@ -99,7 +99,7 @@ for mol_id, smile in zip(mol_id, smiles):
             diff_energy += energy
             print(f'{mol_id}', ' molecule triplet energy (triplet geometry)', ': %5.2f eV' % energy)
     diff_energy_list.append(diff_energy)
-    error_msg.append(f'No error')
+    error_msg.append(exception_to_append)
 
 
 for i in range(len(diff_energy_list)):
