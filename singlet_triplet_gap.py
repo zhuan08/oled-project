@@ -29,6 +29,9 @@ for i in data["smiles"]:
 mol_id = []
 for i in data["mol_id"]:
     mol_id.append(i)
+error_mol = []
+for i in data["mol_id"]:
+    error_mol.append(i)
 # -------- smiles to rdkit molecule --------
 diff_energy_list = []
 final_mol_id = []
@@ -95,7 +98,10 @@ for mol_id, smile in zip(mol_id, smiles):
             diff_energy += energy
             print(f'{mol_id}', ' molecule triplet energy (triplet geometry)', ': %5.2f eV' % energy)
     diff_energy_list.append(diff_energy)
-    error_msg.appened('No Error Message')
+    error_msg.append('No Error Message')
 
-for i in range(len(diff_energy_list)):
-    print(final_mol_id[i], diff_energy_list[i], error_msg[i])
+for i in range(len(final_mol_id)):
+    print(final_mol_id[i], ',', diff_energy_list[i])
+
+for i in range(len(error_mol)):
+    print(error_mol[i], ',', error_msg[i])
