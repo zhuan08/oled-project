@@ -11,7 +11,7 @@ from ase.visualize import view
 import pandas as pd
 IPythonConsole.ipython_3d = True
 
-atom = ase.io.read(filename='geometries/CUYRAS.xyz')
-view(atom)
-atom = ase.io.read(filename='geometries/UVEFAE.xyz')
-view(atom)
+files = ['CUYRAS', 'CUYZZ03', 'CUYZZ07', 'CUYZZ08', 'CUYZZ09', 'IJUZZ04', 'LOKZZ01', 'QAYZZ04', 'UVEFAE']
+for name in files:
+    atom = ase.io.read(filename=f'geometries/{name}.xyz')
+    view(atom)
