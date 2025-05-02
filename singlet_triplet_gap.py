@@ -9,6 +9,7 @@ from rdkit.Chem.Draw import IPythonConsole
 from rdkit.Chem import rdDistGeom
 from rdkit.Chem import Draw
 import pandas as pd
+import numpy as np
 IPythonConsole.ipython_3d = True
 
 # Create an output folder for the geometries, if it doesn't already exist
@@ -100,8 +101,8 @@ for mol_id, smile in zip(mol_id, smiles):
     diff_energy_list.append(diff_energy)
     error_msg.append('No Error Message')
 
-for i in range(len(final_mol_id)):
-    print(final_mol_id[i], ',', diff_energy_list[i])
-
 for i in range(len(error_mol)):
     print(error_mol[i], ',', error_msg[i])
+
+for i in range(len(final_mol_id)):
+    print(final_mol_id[i], ',', diff_energy_list[i])
