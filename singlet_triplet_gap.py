@@ -51,7 +51,7 @@ for mol_id, smile in zip(mol_id, smiles):
     else:
         print(f'Did not find geometry for file: {mol_id}')
         # Geometry optimization
-        molecule = Chem.MolFromSmiles(smile)
+        molecule = Chem.MolFromMol2File(f'structures_mol2/{mol_id}.mol2')
         molecule = Chem.AddHs(molecule)
             # -------- rdkit molecule positions --------
         try:
