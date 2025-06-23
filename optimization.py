@@ -13,6 +13,7 @@ import pandas as pd
 import numpy as np
 IPythonConsole.ipython_3d = True
 
+
 geom_dir_name = 'geometries'
 try:
     os.mkdir(geom_dir_name)
