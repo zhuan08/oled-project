@@ -38,6 +38,7 @@ diff_energy_list = []
 final_mol_id = []
 error_msg = []
 i = 0
+
 for mol_id, smile in zip(mol_id, smiles):
     # Draw.MolToImage(molecule).show()
     # Geometry optimization
@@ -101,8 +102,5 @@ for mol_id, smile in zip(mol_id, smiles):
     diff_energy_list.append(diff_energy)
     error_msg.append('No Error Message')
 
-for i in range(len(error_mol)):
-    print(error_mol[i], ',', error_msg[i])
-
 for i in range(len(final_mol_id)):
-    print(final_mol_id[i], ',', diff_energy_list[i])
+    print(final_mol_id[i],',',diff_energy_list[i],',',error_msg[i])
