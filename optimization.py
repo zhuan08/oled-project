@@ -9,10 +9,7 @@ from rdkit import Chem
 from rdkit.Chem.Draw import IPythonConsole
 from rdkit.Chem import rdDistGeom
 from rdkit.Chem import Draw
-import pandas as pd
-import numpy as np
 IPythonConsole.ipython_3d = True
-
 
 geom_dir_name = 'geometries'
 try:
@@ -21,47 +18,38 @@ except FileExistsError:
     pass
 
 mol_id = []
-geom_id = []
+path_id = []
 final_mol_id = []
 error_msg = []
 diff_energy_list = []
-i = 0
 
 # Creating list of mol_ids
-for mol in os.listdir('structures_mol2'):
-    if mol =='.DS_Store':
-        continue
+for mol in glob.glob('structures_mol2/*.mol2'):
     if '.mol2' in mol:
-        updated_file = mol.replace('.mol2', '')
+        updated_file = mol.replace('structures_mol2', '')
+        updated_file = updated_file.replace('.mol2', '')
+        updated_file = updated_file.replace('/', '')
         mol_id.append(updated_file)
 print(mol_id)
 
-# Creating list of geom_ids
-for geom in glob.glob('structures_mol2/*.mol2'):
-    if geom =='.DS_Store':
-        continue
-    geom_id.append(geom)
-print(geom_id)
+# Creating list of paths for mol2 molecules
+for path in glob.glob('structures_mol2/*.mol2'):
+    if '.mol2' in path:
+        path_id.append(path)
+print(path_id)
 
-
-for mol_id, geom_id in zip(mol_id, geom_id):
-    # Draw.MolToImage(molecule).show()
-    # Geometry optimization
-    # Path name, based on the molecule identifier
+for mol_id, path_id in zip(mol_id, path_id):
     geom_path = os.path.join(geom_dir_name, f'{mol_id}.xyz')
-    # First, check if there's already a geometry saved, and if so, just load it
     if os.path.exists(geom_path):
         atom = ase.io.read(filename=geom_path)
         print(f'Found geometry for file: {mol_id}')
         final_mol_id.append(mol_id)
     else:
         print(f'Did not find geometry for file: {mol_id}')
-        # Geometry optimization
-        molecule = Chem.MolFromMol2File(geom_id, removeHs=False, sanitize=False)
+        molecule = Chem.MolFromMol2File(path_id, removeHs=False, sanitize=False)
         if molecule is None:
-            raise ValueError(f'MolFromMol2File returned None on {geom_id}')
+            raise ValueError(f'MolFromMol2File returned None on {mol_id}.mol2')
         molecule = Chem.AddHs(molecule)
-            # -------- rdkit molecule positions --------
         try:
             octahedral_embed(molecule, isomer="tridentate")
             print(f'Used octahedral_embed on: {mol_id}')
@@ -77,13 +65,12 @@ for mol_id, geom_id in zip(mol_id, geom_id):
             error_msg.append(e)
             continue
         pos_mol = conf_mol.GetPositions()
-        # -------- rdkit.atom obj to get symbols --------
         atom_mol = molecule.GetAtoms()
         atom_sym = []
         for char in atom_mol:
             atom_sym.append(char.GetSymbol())
         print(atom_sym)
-        atom = Atoms(atom_sym, positions=pos_mol)  # atom object to calculate triplet - singlet gap (in triplet geometry)
+        atom = Atoms(atom_sym, positions=pos_mol)
         atom.calc = TBLite(multiplicity=3)
         opt = BFGS(atom, logfile=None, trajectory=None)
         try:
@@ -93,7 +80,6 @@ for mol_id, geom_id in zip(mol_id, geom_id):
             print(f'Did not optimize run on: {mol_id}')
             error_msg.append(e)
             continue
-        # Write the geometry to a file
         ase.io.write(filename=geom_path, images=atom)
     diff_energy = 0
     for mult_e in [1, 3]:
@@ -109,5 +95,6 @@ for mol_id, geom_id in zip(mol_id, geom_id):
     diff_energy_list.append(diff_energy)
     error_msg.append('No Error Message')
 
+i = 0
 for i in range(len(final_mol_id)):
     print(final_mol_id[i],',',diff_energy_list[i],',',error_msg[i])

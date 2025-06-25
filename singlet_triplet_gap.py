@@ -37,7 +37,6 @@ for i in data["mol_id"]:
 diff_energy_list = []
 final_mol_id = []
 error_msg = []
-i = 0
 
 for mol_id, smile in zip(mol_id, smiles):
     # Draw.MolToImage(molecule).show()
@@ -52,7 +51,7 @@ for mol_id, smile in zip(mol_id, smiles):
     else:
         print(f'Did not find geometry for file: {mol_id}')
         # Geometry optimization
-        molecule = Chem.MolFromMol2File(f'structures_mol2/{mol_id}.mol2')
+        molecule = Chem.MolFromSmiles(smile)
         molecule = Chem.AddHs(molecule)
             # -------- rdkit molecule positions --------
         try:
@@ -102,5 +101,6 @@ for mol_id, smile in zip(mol_id, smiles):
     diff_energy_list.append(diff_energy)
     error_msg.append('No Error Message')
 
+i = 0
 for i in range(len(final_mol_id)):
     print(final_mol_id[i],',',diff_energy_list[i],',',error_msg[i])
