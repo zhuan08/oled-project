@@ -9,7 +9,7 @@ import pandas as pd
 IPythonConsole.ipython_3d = True
 
 # -------- Methanol --------
-inpath = 'C1H4O1.xyz'
+inpath = 'misc_files/C1H4O1.xyz'
 calc = TBLite()
 atoms = ase.io.read(inpath)
 atoms.calc = calc

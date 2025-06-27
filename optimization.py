@@ -42,26 +42,20 @@ for mol_id, path_id in zip(mol_id, path_id):
     geom_path = os.path.join(geom_dir_name, f'{mol_id}.xyz')
     if os.path.exists(geom_path):
         atom = ase.io.read(filename=geom_path)
-        print(f'Found geometry for file: {mol_id}')
         final_mol_id.append(mol_id)
     else:
-        print(f'Did not find geometry for file: {mol_id}')
         molecule = Chem.MolFromMol2File(path_id, removeHs=False, sanitize=False)
         if molecule is None:
             raise ValueError(f'MolFromMol2File returned None on {mol_id}.mol2')
         molecule = Chem.AddHs(molecule)
         try:
             octahedral_embed(molecule, isomer="tridentate")
-            print(f'Used octahedral_embed on: {mol_id}')
         except Exception as e: 
-            print(f'Did not use octahedral_embed on: {mol_id}')
             error_msg.append(e)
             continue
         try:
             conf_mol = molecule.GetConformer()
-            print(f'Conformed molecule on: {mol_id}')
         except Exception as e:
-            print(f'Did not conform molecule on: {mol_id}')
             error_msg.append(e)
             continue
         pos_mol = conf_mol.GetPositions()
@@ -75,9 +69,7 @@ for mol_id, path_id in zip(mol_id, path_id):
         opt = BFGS(atom, logfile=None, trajectory=None)
         try:
             opt.run(fmax=0.05)
-            print(f'Optimized run on: {mol_id}')
         except Exception as e:
-            print(f'Did not optimize run on: {mol_id}')
             error_msg.append(e)
             continue
         ase.io.write(filename=geom_path, images=atom)
