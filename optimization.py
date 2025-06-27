@@ -73,20 +73,3 @@ for mol_id, path_id in zip(mol_id, path_id):
             error_msg.append(e)
             continue
         ase.io.write(filename=geom_path, images=atom)
-    diff_energy = 0
-    for mult_e in [1, 3]:
-        atom.calc = TBLite(multiplicity=mult_e)
-        if mult_e == 1:
-            energy = atom.get_potential_energy()
-            diff_energy -= energy
-            print(f'{mol_id}', ' molecule singlet energy (triplet geometry)', ': %5.2f eV' % energy)
-        if mult_e == 3:
-            energy = atom.get_potential_energy()
-            diff_energy += energy
-            print(f'{mol_id}', ' molecule triplet energy (triplet geometry)', ': %5.2f eV' % energy)
-    diff_energy_list.append(diff_energy)
-    error_msg.append('No Error Message')
-
-i = 0
-for i in range(len(final_mol_id)):
-    print(final_mol_id[i],',',diff_energy_list[i],',',error_msg[i])
