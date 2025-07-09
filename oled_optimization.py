@@ -17,9 +17,9 @@ try:
 except FileExistsError:
     pass
 
+mol_error_pair = []
 mol_ids = []
 path_id = []
-error_msg = []
 diff_energy_list = []
 
 # Creating list of mol_ids
@@ -39,7 +39,7 @@ for mol_id, path_id in zip(mol_ids, path_id):
     geom_path = os.path.join(geom_dir_name, f'{mol_id}.xyz')
     if os.path.exists(geom_path):
         atom = ase.io.read(filename=geom_path)
-        error_msg.append('No Error Message')
+        print(f'Found geometry for file: {mol_id}')
     else:
         molecule = Chem.MolFromMol2File(path_id, removeHs=False, sanitize=False)
         if molecule is None:
@@ -47,12 +47,12 @@ for mol_id, path_id in zip(mol_ids, path_id):
         try:
             octahedral_embed(molecule, isomer="tridentate")
         except Exception as e: 
-            error_msg.append(e)
+            mol_error_pair.append((mol_id, e))
             continue
         try:
             conf_mol = molecule.GetConformer()
         except Exception as e:
-            error_msg.append(e)
+            mol_error_pair.append((mol_id, e))
             continue
         pos_mol = conf_mol.GetPositions()
         atom_mol = molecule.GetAtoms()
@@ -66,11 +66,10 @@ for mol_id, path_id in zip(mol_ids, path_id):
         try:
             opt.run(fmax=0.05)
         except Exception as e:
-            error_msg.append(e)
+            mol_error_pair.append(mol_id, e)
             continue
         ase.io.write(filename=geom_path, images=atom)
-    error_msg.append('No Error Message')
-
+    mol_error_pair.append((mol_id, "No Error"))
 i = 0
-for i in range(len(mol_ids)):
-    print(mol_ids[i], error_msg[i])
+for i in range(len(mol_error_pair)):
+    print(mol_error_pair[i])

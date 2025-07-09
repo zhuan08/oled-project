@@ -1,9 +1,12 @@
-import ase
+import os
+import ase.io
 from ase import Atoms
 from ase.optimize import BFGS
+from tblite.ase import TBLite
 from ase.calculators.gamess_us import GAMESSUS
-from ase.io import read, write
-
+from rdkit import Chem
+from rdkit.Chem.Draw import IPythonConsole
+from rdkit.Chem import rdDistGeom
 IPythonConsole.ipython_3d = True
 
 # -------- Comparing Energies based on Positions --------
