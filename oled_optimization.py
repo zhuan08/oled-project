@@ -5,11 +5,19 @@ from octahedral_embed import octahedral_embed
 from ase import Atoms
 from ase.optimize import BFGS
 from tblite.ase import TBLite
+from ase.calculators.gamess_us import GAMESSUS
 from rdkit import Chem
 from rdkit.Chem.Draw import IPythonConsole
 from rdkit.Chem import rdDistGeom
 from rdkit.Chem import Draw
 IPythonConsole.ipython_3d = True
+
+tblite_calc_singlet = TBLite(multiplicity=1)
+tblite_calc_triplet = TBLite(multiplicity=3)
+gamess_calc_singlet = GAMESSUS(contrl={'mult': 1}, label='molecule',
+                    command='rungms PREFIX.inp 30Jun2020R1 > PREFIX.log 2> PREFIX.err')
+gamess_calc_triplet = GAMESSUS(contrl={'mult': 3}, label='molecule',
+                    command='rungms PREFIX.inp 30Jun2020R1 > PREFIX.log 2> PREFIX.err')
 
 geom_dir_name = 'geometries'
 try:
@@ -39,7 +47,6 @@ for mol_id, path_id in zip(mol_ids, path_id):
     geom_path = os.path.join(geom_dir_name, f'{mol_id}.xyz')
     if os.path.exists(geom_path):
         atom = ase.io.read(filename=geom_path)
-        print(f'Found geometry for file: {mol_id}')
     else:
         molecule = Chem.MolFromMol2File(path_id, removeHs=False, sanitize=False)
         if molecule is None:
@@ -59,9 +66,8 @@ for mol_id, path_id in zip(mol_ids, path_id):
         atom_sym = []
         for char in atom_mol:
             atom_sym.append(char.GetSymbol())
-        print(atom_sym)
         atom = Atoms(atom_sym, positions=pos_mol)
-        atom.calc = TBLite(multiplicity=3)
+        atom.calc = tblite_calc_triplet
         opt = BFGS(atom, logfile=None, trajectory=None)
         try:
             opt.run(fmax=0.05)

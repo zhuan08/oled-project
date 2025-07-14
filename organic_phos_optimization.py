@@ -3,12 +3,19 @@ import ase.io
 from ase import Atoms
 from ase.optimize import BFGS
 from tblite.ase import TBLite
+from ase.calculators.gamess_us import GAMESSUS
 from rdkit import Chem
 from rdkit.Chem.Draw import IPythonConsole
 from rdkit.Chem import rdDistGeom
 import pandas as pd
 IPythonConsole.ipython_3d = True
 
+tblite_calc_singlet = TBLite(multiplicity=1)
+tblite_calc_triplet = TBLite(multiplicity=3)
+gamess_calc_singlet = GAMESSUS(contrl={'mult': 1}, label='molecule',
+                    command='rungms PREFIX.inp 30Jun2020R1 > PREFIX.log 2> PREFIX.err')
+gamess_calc_triplet = GAMESSUS(contrl={'mult': 3}, label='molecule',
+                    command='rungms PREFIX.inp 30Jun2020R1 > PREFIX.log 2> PREFIX.err')
 # Create an output folder for the geometries, if it doesn't already exist
 geom_dir_name = 'organic_phos_geometries'
 try:
@@ -36,9 +43,7 @@ for mol_id, smile in zip(mol_ids, smiles):
     # First, check if there's already a geometry saved, and if so, just load it
     if os.path.exists(geom_path):
         atom = ase.io.read(filename=geom_path)
-        print(f'Found geometry for file: {mol_id}')
     else:
-        print(f'Did not find geometry for file: {mol_id}')
         molecule = Chem.MolFromSmiles(smile, removeHs=False, sanitize=False)
         if molecule is None:
             raise ValueError(f'MolFromMol2File returned None on {mol_id}.mol2')
@@ -46,17 +51,13 @@ for mol_id, smile in zip(mol_ids, smiles):
         # Embed molecule
         try:
             rdDistGeom.EmbedMolecule(molecule)
-            print(f'Embeded molecule on {mol_id}')
         except Exception as e:
-            print(f'Did no embeded molecule on {mol_id}')
             mol_error_pair.append((mol_id, e))
             continue
         # conform molecule
         try:
             conf_mol = molecule.GetConformer()
-            print(f'Conformed molecule on: {mol_id}')
         except Exception as e:
-            print(f'Did not conform molecule on: {mol_id}')
             mol_error_pair.append((mol_id, e))
             continue
         pos_mol = conf_mol.GetPositions()
@@ -67,13 +68,11 @@ for mol_id, smile in zip(mol_ids, smiles):
             atom_sym.append(char.GetSymbol())
         print(atom_sym)
         atom = Atoms(atom_sym, positions=pos_mol)  # atom object to calculate triplet - singlet gap (in triplet geometry)
-        atom.calc = TBLite(multiplicity=3)
+        atom.calc = tblite_calc_triplet
         opt = BFGS(atom, logfile=None, trajectory=None)
         try:
             opt.run(fmax=0.05)
-            print(f'Optimized run on: {mol_id}')
         except Exception as e:
-            print(f'Did not optimize run on: {mol_id}')
             mol_error_pair.append((mol_id, e))
             continue
             # Write the geometry to a file
