@@ -4,6 +4,7 @@ import pandas as pd
 from pandas import merge_ordered
 from tblite.ase import TBLite
 from ase.calculators.gamess_us import GAMESSUS
+from ase.calculators.psi4 import Psi4
 from rdkit.Chem.Draw import IPythonConsole
 IPythonConsole.ipython_3d = True
 
@@ -23,6 +24,13 @@ gamess_calc_singlet = GAMESSUS(contrl={'mult': 1}, label='molecule',
 gamess_calc_triplet = GAMESSUS(contrl={'mult': 3}, label='molecule',
                     command='rungms PREFIX.inp 30Jun2020R1 > PREFIX.log 2> PREFIX.err')
 
+CHARGE = 0
+METHOD = 'b3lyp'
+BASIS = 'def2-svp'
+psi4_calc_singlet = Psi4(method=METHOD, basis=BASIS, charge=CHARGE, multiplicity=1)
+psi4_calc_triplet = Psi4(method=METHOD, basis=BASIS, charge=CHARGE,
+                  multiplicity=3, reference='uks')
+
 for geom_path in glob.glob('organic_phos_geometries/*.xyz'):
     path_id.append(geom_path)
 
@@ -31,11 +39,11 @@ for path in path_id:
     diff_energy = 0
     for multiplicity in ['singlet', 'triplet']:
         if multiplicity == 'singlet':
-            atom.calc = gamess_calc_singlet
+            atom.calc = psi4_calc_singlet
             energy = atom.get_potential_energy()
             diff_energy -= energy
         if multiplicity == 'triplet':
-            atom.calc = gamess_calc_triplet
+            atom.calc = psi4_calc_triplet
             energy = atom.get_potential_energy()
             diff_energy += energy
     diff_energy_list.append(diff_energy)
