@@ -1,0 +1,12 @@
+----- GAMESS execution script 'rungms' -----
+This job is running on host Mac
+under operating system Darwin at Mon Jul 14 13:43:33 EDT 2025
+Available scratch disk space (Kbyte units) at beginning of the job is
+Filesystem   1024-blocks      Used Available Capacity iused      ifree %iused  Mounted on
+/dev/disk3s5   239362496 102243668 114906968    48%  918434 1149069680    0%   /System/Volumes/Data
+GAMESS temporary binary files will be written to /Users/zhuan08/Programming_Projects/oled_project/gamess/restart
+GAMESS supplementary output files will be written to /Users/zhuan08/Programming_Projects/oled_project/gamess/restart
+Copying input file ./molecule_test.inp to your run's scratch directory...
+Input file molecule_test.inp does not exist.
+This job expected the input file to be in directory /Users/zhuan08/Programming_Projects/oled_project/molecule_test
+Please fix your file name problem, and resubmit.

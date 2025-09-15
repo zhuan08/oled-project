@@ -1,0 +1,8 @@
+cp ./molecule.inp /Users/zhuan08/Programming_Projects/oled_project/gamess/restart/molecule.F05
+unset echo
+/Users/zhuan08/Programming_Projects/oled_project/gamess/ddikick.x /Users/zhuan08/Programming_Projects/oled_project/gamess/gamess.30Jun2020R1.x molecule -ddi 1 1 localhost -scr /Users/zhuan08/Programming_Projects/oled_project/gamess/restart
+Note: The following floating-point exceptions are signalling: IEEE_DENORMAL
+unset echo
+ls: No match.
+ls: No match.
+ls: No match.
