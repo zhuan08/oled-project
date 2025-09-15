@@ -70,5 +70,6 @@ def st_gap_calculate(path, calc_singlet, calc_triplet):
             diff_energy += energy
     print(diff_energy)
 
+# Test using abp.xyz
 optimize_geometry(mol_id=m_id, smile=abp_smile, calc_tiplet=tblite_calc_triplet)
 st_gap_calculate(path="new_organic_phos_geometries/abp.xyz", calc_singlet=tblite_calc_singlet, calc_triplet=tblite_calc_triplet)
